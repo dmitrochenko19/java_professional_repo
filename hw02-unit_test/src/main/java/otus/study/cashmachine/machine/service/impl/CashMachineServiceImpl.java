@@ -39,7 +39,7 @@ public class CashMachineServiceImpl implements CashMachineService {
             return moneyBoxService.getMoney(amount.intValue());
         } catch (Exception e) {
             //нужно поставить здесь строчку
-            //if (e.getMessage() != "Not enough money")
+            //if (!e.getMessage().equals("Not enough money"))
             cardService.putMoney(cardNum, pin, amount);
             throw new RuntimeException(e);
         }
