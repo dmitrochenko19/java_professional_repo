@@ -66,50 +66,52 @@ public class CardServiceTest {
         assertEquals(BigDecimal.ONE, amountCaptor.getValue());
         assertEquals(100L, idCaptor.getValue().longValue());
     }
+
     @Test
     void getMoneyWrongPin() {
         when(cardsDao.getCardByNumber("1111"))
                 .thenReturn(new Card(1L, "1111", 100L, TestUtil.getHash("0000")));
 
         when(accountService.getMoney(anyLong(), any())).thenReturn(BigDecimal.TEN);
-        assertThrows(IllegalArgumentException.class,()->cardService.getMoney("1111", "1234", BigDecimal.ONE));
+        assertThrows(IllegalArgumentException.class, () -> cardService.getMoney("1111", "1234", BigDecimal.ONE));
 
     }
+
     @Test
     void putMoney() {
         ArgumentCaptor<String> cardNumberCaptorString = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<Long> accountIdCaptor = ArgumentCaptor.forClass(Long.class);
         ArgumentCaptor<BigDecimal> sumCaptor = ArgumentCaptor.forClass(BigDecimal.class);
-        Card card = new Card(1L,"1111",1L,TestUtil.getHash("1234"));
+        Card card = new Card(1L, "1111", 1L, TestUtil.getHash("1234"));
         when(cardsDao.getCardByNumber(cardNumberCaptorString.capture())).thenReturn(card);
         //return value doesn't matter here
         when(accountService.putMoney(accountIdCaptor.capture(), sumCaptor.capture())).thenReturn(new BigDecimal(100));
-        cardService.putMoney("1111","1234",new BigDecimal(100));
+        cardService.putMoney("1111", "1234", new BigDecimal(100));
 
         verify(cardsDao, only()).getCardByNumber(anyString());
-        verify(accountService,only()).putMoney(anyLong(),any());
+        verify(accountService, only()).putMoney(anyLong(), any());
 
-        assertEquals("1111",cardNumberCaptorString.getValue());
-        assertEquals(1L,accountIdCaptor.getValue());
+        assertEquals("1111", cardNumberCaptorString.getValue());
+        assertEquals(1L, accountIdCaptor.getValue());
         assertEquals(new BigDecimal(100), sumCaptor.getValue());
     }
 
     @Test
-    void changePin(){
+    void changePin() {
         ArgumentCaptor<Card> cardCaptor = ArgumentCaptor.forClass(Card.class);
-        Card card = new Card(1L,"1111",1L,TestUtil.getHash("1234"));
+        Card card = new Card(1L, "1111", 1L, TestUtil.getHash("1234"));
         when(cardsDao.getCardByNumber("1111")).thenReturn(card);
-        when(cardsDao.saveCard(cardCaptor.capture())).thenReturn(new Card(1L,"1111",1L,TestUtil.getHash("5678")));
-        cardService.cnangePin("1111","1234","5678");
-        assertEquals(TestUtil.getHash("5678"),cardCaptor.getValue().getPinCode());
+        when(cardsDao.saveCard(cardCaptor.capture())).thenReturn(new Card(1L, "1111", 1L, TestUtil.getHash("5678")));
+        cardService.cnangePin("1111", "1234", "5678");
+        assertEquals(TestUtil.getHash("5678"), cardCaptor.getValue().getPinCode());
     }
 
     @Test
     void changePinWrongPin() {
-        Card card = new Card(1L,"1111",1L,TestUtil.getHash("1234"));
+        Card card = new Card(1L, "1111", 1L, TestUtil.getHash("1234"));
         when(cardsDao.getCardByNumber("1111")).thenReturn(card);
-        cardService.cnangePin("1111","1111","5678");
-        assertEquals(TestUtil.getHash("1234"),card.getPinCode());
+        cardService.cnangePin("1111", "1111", "5678");
+        assertEquals(TestUtil.getHash("1234"), card.getPinCode());
     }
 
     @Test
