@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="otus.study.cashmachine.machine.service.CashMachineServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-18T20:31:38" hostname="LAPTOP-FSDS5VG2" time="0.954">
-  <properties/>
-  <testcase name="changePinWithAnswer()" classname="otus.study.cashmachine.machine.service.CashMachineServiceTest" time="0.954"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
