@@ -59,7 +59,7 @@ class CashMachineServiceTest {
 
         List<Integer> result = cashMachineService.getMoney(cashMachine, "0000", "1111", new BigDecimal(100));
         assertEquals(List.of(0, 0, 0, 1), result);
-        verify(cardService,times(1)).getMoney("0000","1111",new BigDecimal(100));
+        verify(cardService, times(1)).getMoney("0000", "1111", new BigDecimal(100));
     }
 
     @Test
@@ -106,12 +106,7 @@ class CashMachineServiceTest {
         Card card = new Card(1L, "0000", 1L, TestUtil.getHash("1234"));
 
         when(cardsDao.getCardByNumber(anyString())).thenReturn(card);
-        when(cardsDao.saveCard(any())).thenAnswer(new Answer<Card>() {
-            @Override
-            public Card answer(InvocationOnMock invocation) throws Throwable {
-                return invocation.getArgument(0);
-            }
-        });
+        when(cardsDao.saveCard(any())).thenAnswer((Answer<Card>) invocation -> invocation.getArgument(0));
 
         cashMachineService.changePin("0000", "1234", "5678");
 
