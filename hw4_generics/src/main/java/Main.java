@@ -35,5 +35,9 @@ public class Main {
         Box<Fruit> fruitBox1 = new Box<>();
         System.out.println(fruitBox1.weight());
 
+        fruitBox.pour(fruitBox);
+        //expected 4, nothing changed because we poured
+        //fruits into the same box
+        System.out.println(fruitBox.getSize());
     }
 }

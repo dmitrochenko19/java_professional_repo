@@ -34,8 +34,10 @@ public class Box<T extends Fruit> {
     }
 
     public void pour(Box<? super T> anotherBox) throws IllegalArgumentException {
+        if (this == anotherBox)
+            return;
         if (anotherBox == null)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("another box is null");
         for (T fruit : this.fruits) {
             anotherBox.addFruit(fruit);
         }

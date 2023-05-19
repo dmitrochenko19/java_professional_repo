@@ -74,11 +74,16 @@ public class BoxTest {
     }
 
     @Test
+    public void pourIntoTheSameBox() {
+        initAppleBox();
+        appleBox.pour(appleBox);
+        assertEquals(2, appleBox.getSize());
+    }
+
+    @Test
     public void compare() {
         initAll();
-        boolean result1 = fruitBox.compare(appleBox);
-        assertTrue(result1);
-        boolean result2 = orangeBox.compare(appleBox);
-        assertFalse(result2);
+        assertTrue(fruitBox.compare(appleBox));
+        assertFalse(orangeBox.compare(appleBox));
     }
 }
