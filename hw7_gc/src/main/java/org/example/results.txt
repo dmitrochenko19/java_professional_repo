@@ -1,0 +1,17 @@
+Результаты:
+Paзмер heap                Время работы программы
+256mb                      outOfMemoryError
+2048mb                     spend msec:21367, sec:21
+1024mb                     spend msec:11549, sec:11
+512mb                      spend msec:12714, sec:12
+
+После оптимизации программы (в классах Data и Summator все объекты типа Integer были заменены на int)
+Paзмер heap                Время работы программы
+4096mb                     spend msec:1859, sec:1
+2048mb                     spend msec:1941, sec:1
+1024mb                     spend msec:1814, sec:1
+512mb                      spend msec:1841, sec:1
+256mb                      spend msec:2507, sec:2
+128mb                      outOfMemoryError
+
+Итог: оптимальный размер heap = 1024mb
